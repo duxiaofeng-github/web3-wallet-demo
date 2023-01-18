@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { paths } from "./routes";
-import { useWallet } from "./useWallet";
+import { useWallet } from "./use-wallet";
 import "./home.css";
 import { Typography } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";

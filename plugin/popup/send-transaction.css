@@ -1,0 +1,8 @@
+.send-container {
+  padding: 10px;
+}
+
+.send-container .footer{
+  display: flex;
+  gap: 10px;
+}

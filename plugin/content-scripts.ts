@@ -3,13 +3,37 @@ import { Event } from "./event";
 
 console.log("content script loaded");
 
+function dispatchEvent(name: Event, detail: any) {
+  document.dispatchEvent(
+    new CustomEvent(name, {
+      detail,
+    })
+  );
+}
+
 function listenToDomEvent() {
   document.addEventListener(Event.Request, function (e) {
     if ("detail" in e) {
-      browser.runtime.sendMessage({
-        method: Event.Request,
-        detail: e.detail,
-      });
+      console.log("request", e.detail);
+      const { method, params, id } = e.detail as any;
+
+      if (method && params && id) {
+        browser.runtime
+          .sendMessage({
+            method: Event.Request,
+            detail: {
+              id,
+              method,
+              params,
+            },
+          })
+          .then((result) => {
+            dispatchEvent(Event.Response, { id, jsonrpc: "2.0", result });
+          })
+          .catch((error) => {
+            dispatchEvent(Event.ResponseError, { id, jsonrpc: "2.0", error });
+          });
+      }
     }
   });
 }
@@ -25,4 +49,5 @@ function injectScript(file: string) {
 }
 
 injectScript(browser.runtime.getURL("inject.js"));
+
 listenToDomEvent();

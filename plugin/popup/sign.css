@@ -1,0 +1,8 @@
+.sign-container {
+  padding: 10px;
+}
+
+.sign-container .footer{
+  display: flex;
+  gap: 10px;
+}

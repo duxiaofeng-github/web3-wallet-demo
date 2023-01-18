@@ -4,7 +4,9 @@ import { paths } from "./routes";
 import { globalStore } from "./store";
 import "./setup.css";
 import { Button, Form, Input, Typography } from "antd";
-import { useWallet } from "./useWallet";
+import { useWallet } from "./use-wallet";
+import browser from "webextension-polyfill";
+import { BackgroundEvent } from "../event";
 
 export const Setup: React.FunctionComponent = () => {
   const wallet = useWallet();
@@ -13,9 +15,14 @@ export const Setup: React.FunctionComponent = () => {
     return <Navigate to={paths.home} />;
   }
 
-  function submit(privateKey: string) {
+  async function submit(privateKey: string) {
     globalStore.update((store) => {
       store.privateKey = privateKey;
+    });
+
+    await browser.runtime.sendMessage({
+      method: BackgroundEvent.SetPrivateKey,
+      detail: privateKey,
     });
   }
 
@@ -41,9 +48,11 @@ export const Setup: React.FunctionComponent = () => {
         >
           <Input />
         </Form.Item>
-        <Button block type="primary" htmlType="submit">
-          Submit
-        </Button>
+        <Form.Item>
+          <Button block type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </div>
   );

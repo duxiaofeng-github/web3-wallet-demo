@@ -1,6 +1,5 @@
 import React from "react";
 import { createHashRouter } from "react-router-dom";
-import { Guard } from "./guard";
 import { Home } from "./Home";
 import { SendTransaction } from "./SendTransaction";
 import { Setup } from "./Setup";

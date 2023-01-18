@@ -13,13 +13,9 @@ import { Guard } from "./guard";
 function renderApp() {
   render(
     <React.StrictMode>
-      <Guard
-        render={() => (
-          <RexProvider value={globalStore}>
-            <RouterProvider router={router} />
-          </RexProvider>
-        )}
-      />
+      <RexProvider value={globalStore}>
+        <Guard render={() => <RouterProvider router={router} />} />
+      </RexProvider>
     </React.StrictMode>,
     document.getElementById("container")
   );
@@ -28,8 +24,9 @@ function renderApp() {
 renderApp();
 
 async function handleMessage(message: any) {
+  console.log("popup on message", message);
   const { method, detail } = message || {};
-  const { method: rpcMethod, params: rpcParams } = detail || {};
+  const { id: rpcId, method: rpcMethod, params: rpcParams } = detail || {};
 
   if (
     method &&
@@ -39,21 +36,45 @@ async function handleMessage(message: any) {
   ) {
     switch (method) {
       case Event.Request:
-        globalStore.update((store) => {
-          store.rpcParams = rpcParams;
-        });
+        return new Promise<any>((resolve, reject) => {
+          const { pendingRequest, privateKey } = globalStore.getState();
 
-        switch (rpcMethod) {
-          case InternalRpcMethods.EthSign:
-            router.navigate(paths.sign);
-            break;
-          case InternalRpcMethods.EthSendtransaction:
-            router.navigate(paths.sendTransaction);
-            break;
-        }
-        break;
+          if (pendingRequest) {
+            // we only accept one request at one time for now
+            pendingRequest.reject(new Error("request canceled"));
+          }
+
+          if (!privateKey) {
+            reject(new Error("wallet haven't setup"));
+
+            return;
+          }
+
+          globalStore.update((store) => {
+            store.pendingRequest = {
+              rpcId,
+              rpcMethod,
+              rpcParams,
+              resolve,
+              reject,
+            };
+          });
+
+          switch (rpcMethod) {
+            case InternalRpcMethods.PersonalSign:
+            case InternalRpcMethods.EthSign:
+            case InternalRpcMethods.EthSignTransaction:
+              router.navigate(paths.sign);
+              break;
+            case InternalRpcMethods.EthSendtransaction:
+              router.navigate(paths.sendTransaction);
+              break;
+          }
+        });
     }
   }
+
+  return true;
 }
 
 browser.runtime.onMessage.addListener(handleMessage);

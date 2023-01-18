@@ -4,22 +4,27 @@ import { LoadingOutlined } from "@ant-design/icons";
 import useSWR from "swr";
 import browser from "webextension-polyfill";
 import { BackgroundEvent } from "../event";
-import { globalStore } from "./store";
+import { globalStore, IStore } from "./store";
+import { useRexContext } from "@jimengio/rex";
 
 interface IProps {
   render: () => ReactNode;
 }
 
 export const Guard: React.FunctionComponent<IProps> = ({ render }) => {
-  const { data, error } = useSWR(
+  const { privateKeyLoaded } = useRexContext((store: IStore) => store);
+  const { error } = useSWR(
     "loadPrivateKey",
     async () => {
-      const privateKey = await browser.runtime.sendMessage(
-        BackgroundEvent.GetPrivateKey
-      );
+      console.log("loadPrivateKey");
+
+      const privateKey = await browser.runtime.sendMessage({
+        method: BackgroundEvent.GetPrivateKey,
+      });
 
       globalStore.update((store) => {
         store.privateKey = privateKey;
+        store.privateKeyLoaded = true;
       });
     },
     { revalidateOnFocus: false, revalidateOnReconnect: false }
@@ -27,7 +32,7 @@ export const Guard: React.FunctionComponent<IProps> = ({ render }) => {
 
   return (
     <div className="guard-container">
-      {!data && !error ? (
+      {!privateKeyLoaded ? (
         <div className="loading">
           <LoadingOutlined />
         </div>

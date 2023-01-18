@@ -9,7 +9,14 @@ export interface ILoadingOptions<T> {
 
 export interface IStore {
   privateKey?: string;
-  rpcParams?: any;
+  privateKeyLoaded?: boolean;
+  pendingRequest?: {
+    rpcId: string;
+    rpcMethod: string;
+    rpcParams: any;
+    resolve: (result: any) => void;
+    reject: (err: any) => void;
+  };
 }
 
 export const initialStore: IStore = {};
