@@ -2,3 +2,7 @@
   width: 500px;
   padding: 10px;
 }
+
+.setup-container .title , .setup-container .desc {
+  text-align: center;
+}
