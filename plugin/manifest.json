@@ -17,6 +17,7 @@
     "scripts": ["background-scripts.js"],
     "persistent": false
   },
+  "web_accessible_resources": ["inject.js"],
   "permissions": ["activeTab"],
   "browser_action": {
     "default_icon": "assets/wallet.svg",

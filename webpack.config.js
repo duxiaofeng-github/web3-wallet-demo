@@ -12,6 +12,7 @@ module.exports = {
   entry: {
     "content-scripts": "./plugin/content-scripts.ts",
     "background-scripts": "./plugin/background-scripts.ts",
+    inject: "./plugin/inject.ts",
     popup: "./plugin/popup/popup.tsx",
   },
   output: {

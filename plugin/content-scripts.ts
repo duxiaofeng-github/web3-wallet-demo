@@ -1,11 +1,28 @@
 import browser from "webextension-polyfill";
+import { Event } from "./event";
 
-document.body.style.border = "5px solid red";
+console.log("content script loaded");
 
-document.body.addEventListener("click", async function () {
-  const resp = await browser.runtime.sendMessage({
-    message: "hello",
+function listenToDomEvent() {
+  document.addEventListener(Event.Request, function (e) {
+    if ("detail" in e) {
+      browser.runtime.sendMessage({
+        method: Event.Request,
+        detail: e.detail,
+      });
+    }
   });
+}
 
-  console.log(resp);
-});
+function injectScript(file: string) {
+  const script = document.createElement("script");
+
+  script.setAttribute("type", "text/javascript");
+  script.setAttribute("src", file);
+  document.body.appendChild(script);
+
+  console.log("injected");
+}
+
+injectScript(browser.runtime.getURL("inject.js"));
+listenToDomEvent();
