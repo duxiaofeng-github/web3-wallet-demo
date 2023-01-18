@@ -8,7 +8,7 @@ export const Home: React.FunctionComponent = () => {
   const { privateKey } = useRexContext((store: IStore) => store);
 
   if (!privateKey) {
-    return <Navigate to={paths.home} />;
+    return <Navigate to={paths.setup} />;
   }
 
   return null;

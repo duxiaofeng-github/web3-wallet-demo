@@ -1,5 +1,6 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -27,6 +28,17 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader", // inject all css codes into <style> tag on html
+          },
+          {
+            loader: "css-loader", // extract all css imports on js file
+          },
+        ],
+      },
     ],
   },
   watch: true,
@@ -34,12 +46,15 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      filename: "popup.html",
+      template: "plugin/popup/popup.html",
+      favicon: "plugin/assets/wallet.svg",
+      chunks: ["popup"], // only inject popup script
+    }),
+    // copy static files to dist folder
     new CopyPlugin({
       patterns: [
-        {
-          from: path.resolve(__dirname, "plugin/popup/popup.html"),
-          to: "popup.html",
-        },
         {
           from: path.resolve(__dirname, "plugin/manifest.json"),
           to: "manifest.json",

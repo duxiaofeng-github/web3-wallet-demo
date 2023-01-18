@@ -5,6 +5,8 @@ import { RexProvider } from "@jimengio/rex";
 import { globalStore } from "./store";
 import { router } from "./routes";
 
+import "antd/dist/reset.css";
+
 function renderApp() {
   render(
     <React.StrictMode>
