@@ -24,7 +24,7 @@ export const Home: React.FunctionComponent = () => {
   }
 
   const { data: balance, error } = useSWR(
-    [`fetch_balance_${wallet ? wallet.address : ""}`],
+    [`fetch_balance_${wallet ? wallet.address : undefined}`],
     fetchBalance,
     {
       revalidateOnFocus: false,

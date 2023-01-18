@@ -1,25 +1,28 @@
+import { ethers } from "ethers";
 import browser from "webextension-polyfill";
-import { Event } from "./event";
+import { BackgroundEvent, Event } from "./event";
 
-async function handleMessage(
-  message: any,
-  sender: browser.Runtime.MessageSender
-) {
-  console.log(sender);
+let privateKey = "";
+let wallet: ethers.Wallet;
+
+async function handleMessage(message: any) {
   const { method, detail } = message || {};
-  const { method: rpcMethod, params: rpcParams } = detail || {};
 
-  if (
-    method &&
-    rpcMethod &&
-    typeof method === "string" &&
-    typeof rpcMethod === "string"
-  ) {
+  if (method && typeof method === "string") {
     switch (method) {
       case Event.Request:
         await browser.browserAction.setPopup({ popup: "popup.html" });
         await browser.browserAction.openPopup();
-        break;
+
+        const resp = await browser.runtime.sendMessage(message);
+
+        return resp;
+      case BackgroundEvent.SetPrivateKey:
+        privateKey = detail;
+
+        return;
+      case BackgroundEvent.GetPrivateKey:
+        return privateKey;
     }
   }
 }

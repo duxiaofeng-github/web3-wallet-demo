@@ -5,6 +5,7 @@ import { IStore } from "./store";
 
 export function useWallet() {
   const { privateKey } = useRexContext((store: IStore) => store);
+
   const wallet = useMemo(() => {
     if (!privateKey) {
       return undefined;

@@ -9,6 +9,7 @@ export interface ILoadingOptions<T> {
 
 export interface IStore {
   privateKey?: string;
+  rpcParams?: any;
 }
 
 export const initialStore: IStore = {};

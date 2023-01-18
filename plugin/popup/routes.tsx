@@ -1,12 +1,16 @@
 import React from "react";
 import { createHashRouter } from "react-router-dom";
+import { Guard } from "./guard";
 import { Home } from "./Home";
+import { SendTransaction } from "./SendTransaction";
 import { Setup } from "./Setup";
+import { Sign } from "./Sign";
 
 export const paths = {
   home: "/",
-  setup: "setup",
-  sendTransaction: "send-transaction",
+  setup: "/setup",
+  sendTransaction: "/send-transaction",
+  sign: "/sign",
 };
 
 export const router = createHashRouter([
@@ -20,7 +24,11 @@ export const router = createHashRouter([
   },
   {
     path: paths.sendTransaction,
-    element: <div>Hello world2!</div>,
+    element: <SendTransaction />,
+  },
+  {
+    path: paths.sign,
+    element: <Sign />,
   },
   {
     index: true,
