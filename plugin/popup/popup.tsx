@@ -1,18 +1,9 @@
 import React from "react";
 import { render } from "react-dom";
-import { createHashRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { RexProvider } from "@jimengio/rex";
-
-const router = createHashRouter([
-  {
-    path: "/",
-    element: <Index />,
-  },
-  {
-    path: "/sendTransaction",
-    element: <div>Hello world2!</div>,
-  },
-]);
+import { globalStore } from "./store";
+import { router } from "./routes";
 
 function renderApp() {
   render(

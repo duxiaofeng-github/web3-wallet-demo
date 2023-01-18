@@ -11,7 +11,7 @@ module.exports = {
   entry: {
     "content-scripts": "./plugin/content-scripts.ts",
     "background-scripts": "./plugin/background-scripts.ts",
-    popup: "./plugin/popup.tsx",
+    popup: "./plugin/popup/popup.tsx",
   },
   output: {
     filename: "[name].js",
@@ -37,7 +37,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "plugin/popup.html"),
+          from: path.resolve(__dirname, "plugin/popup/popup.html"),
           to: "popup.html",
         },
         {
