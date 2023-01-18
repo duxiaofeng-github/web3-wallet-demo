@@ -1,0 +1,18 @@
+.home-container {
+  width: 500px;
+  padding: 10px;
+}
+
+.home-container .balance-wrapper {
+  text-align: center;
+}
+
+.home-container .balance-wrapper .balance-title {
+  margin-bottom: 10px;
+}
+
+.home-container .balance-wrapper .balance {
+  font-weight: 600;
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.88);
+}

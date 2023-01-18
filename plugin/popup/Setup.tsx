@@ -1,8 +1,7 @@
-import { useRexContext } from "@jimengio/rex";
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { paths } from "./routes";
-import { globalStore, IStore } from "./store";
+import { globalStore } from "./store";
 import "./setup.css";
 import { Button, Form, Input, Typography } from "antd";
 import { useWallet } from "./useWallet";
