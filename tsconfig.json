@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule":true,
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "react",
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["es2016", "dom"],
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+  },
+  "include": [
+    "plugin/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

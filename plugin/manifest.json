@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Web3-wallet-demo",
+  "version": "1.0",
+  "description": "Web3 wallet demo",
+  "icons": {
+    "48": "assets/wallet.svg",
+    "96": "assets/wallet.svg"
+  },
+  "content_scripts": [
+    {
+      "matches": ["file://*/*", "http://*/*", "https://*/*"],
+      "js": ["content-scripts.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["background-scripts.js"],
+    "persistent": false
+  },
+  "permissions": ["activeTab"],
+  "browser_action": {
+    "default_icon": "assets/wallet.svg",
+    "default_title": "Web3 wallet demo",
+    "default_popup": "popup/popup.html"
+  }
+}
