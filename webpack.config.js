@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -10,10 +11,11 @@ module.exports = {
   entry: {
     "content-scripts": "./plugin/content-scripts.ts",
     "background-scripts": "./plugin/background-scripts.ts",
+    popup: "./plugin/popup.tsx",
   },
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "plugin"),
+    path: path.resolve(__dirname, "plugin-dist"),
   },
   module: {
     rules: [
@@ -31,4 +33,22 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "plugin/popup.html"),
+          to: "popup.html",
+        },
+        {
+          from: path.resolve(__dirname, "plugin/manifest.json"),
+          to: "manifest.json",
+        },
+        {
+          from: path.resolve(__dirname, "plugin/assets"),
+          to: "assets",
+        },
+      ],
+    }),
+  ],
 };
