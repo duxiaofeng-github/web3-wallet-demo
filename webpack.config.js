@@ -50,7 +50,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: "popup.html",
       template: "plugin/popup/popup.html",
-      favicon: "plugin/assets/wallet.svg",
+      favicon: "plugin/assets/wallet.png",
       chunks: ["popup"], // only inject popup script
     }),
     // copy static files to dist folder

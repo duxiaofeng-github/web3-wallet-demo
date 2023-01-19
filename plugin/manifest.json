@@ -4,8 +4,8 @@
   "version": "1.0",
   "description": "Web3 wallet demo",
   "icons": {
-    "48": "assets/wallet.svg",
-    "96": "assets/wallet.svg"
+    "48": "assets/wallet.png",
+    "96": "assets/wallet.png"
   },
   "content_scripts": [
     {
@@ -20,7 +20,7 @@
   "web_accessible_resources": ["inject.js"],
   "permissions": ["activeTab"],
   "browser_action": {
-    "default_icon": "assets/wallet.svg",
+    "default_icon": "assets/wallet.png",
     "default_title": "Web3 wallet demo",
     "default_popup": "popup.html"
   }

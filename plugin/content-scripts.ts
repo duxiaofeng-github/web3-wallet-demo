@@ -31,7 +31,12 @@ function listenToDomEvent() {
             dispatchEvent(Event.Response, { id, jsonrpc: "2.0", result });
           })
           .catch((error) => {
-            dispatchEvent(Event.ResponseError, { id, jsonrpc: "2.0", error });
+            dispatchEvent(Event.ResponseError, {
+              id,
+              jsonrpc: "2.0",
+              message: error.toString(),
+              code: -1, // we need to implement the error handler here later
+            });
           });
       }
     }
