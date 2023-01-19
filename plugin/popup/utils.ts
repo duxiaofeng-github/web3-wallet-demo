@@ -27,3 +27,7 @@ export function getWallet(privateKey: string) {
 
   return wallet;
 }
+
+export const addressShortener = (address: string) => {
+  return `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
+};

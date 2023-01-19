@@ -1,5 +1,8 @@
-.home-container {
-  padding: 10px;
+.home-container .wallet-address {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+  text-align: center;
 }
 
 .home-container .balance-wrapper {

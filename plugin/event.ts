@@ -13,6 +13,6 @@ export enum InternalRpcMethods {
   EthSign = "eth_sign",
   PersonalSign = "personal_sign",
   EthSignTransaction = "eth_signTransaction",
-  EthSendtransaction = "eth_sendtransaction",
+  EthSendtransaction = "eth_sendTransaction",
   EthAccounts = "eth_accounts",
 }

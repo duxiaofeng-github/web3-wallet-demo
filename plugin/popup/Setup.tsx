@@ -7,15 +7,14 @@ import { Button, Form, Input, Typography } from "antd";
 import { useWallet } from "./use-wallet";
 import browser from "webextension-polyfill";
 import { BackgroundEvent } from "../event";
+import { useSubmission } from "./use-submission";
 
 export const Setup: React.FunctionComponent = () => {
   const wallet = useWallet();
 
-  if (wallet) {
-    return <Navigate to={paths.home} />;
-  }
-
-  async function submit(privateKey: string) {
+  const { triggerer, submitting } = useSubmission(async function (
+    privateKey: string
+  ) {
     globalStore.update((store) => {
       store.privateKey = privateKey;
     });
@@ -24,6 +23,10 @@ export const Setup: React.FunctionComponent = () => {
       method: BackgroundEvent.SetPrivateKey,
       detail: privateKey,
     });
+  });
+
+  if (wallet) {
+    return <Navigate to={paths.home} />;
   }
 
   return (
@@ -35,8 +38,9 @@ export const Setup: React.FunctionComponent = () => {
         You need to enter your wallet private key to enable this plugin
       </Typography.Paragraph>
       <Form
+        disabled={submitting}
         onFinish={({ privateKey }) => {
-          submit(privateKey);
+          triggerer(privateKey);
         }}
       >
         <Form.Item
@@ -49,7 +53,7 @@ export const Setup: React.FunctionComponent = () => {
           <Input />
         </Form.Item>
         <Form.Item>
-          <Button block type="primary" htmlType="submit">
+          <Button block type="primary" htmlType="submit" loading={submitting}>
             Submit
           </Button>
         </Form.Item>

@@ -86,7 +86,14 @@ export const Sign: React.FunctionComponent = () => {
           : ""}
       </Typography.Title>
       <Typography.Text type="secondary">
-        {parseMessage(pendingRequest.rpcMethod, pendingRequest.rpcParams)}
+        {`${
+          pendingRequest.rpcMethod === InternalRpcMethods.EthSign ||
+          pendingRequest.rpcMethod === InternalRpcMethods.PersonalSign
+            ? "Message:"
+            : pendingRequest.rpcMethod === InternalRpcMethods.EthSignTransaction
+            ? "Transaction data:"
+            : "Data"
+        } ${parseMessage(pendingRequest.rpcMethod, pendingRequest.rpcParams)}`}
       </Typography.Text>
       <div className="footer">
         <Button

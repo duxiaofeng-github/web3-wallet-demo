@@ -7,6 +7,7 @@ import { Typography } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import useSWR from "swr";
 import { ethers } from "ethers";
+import { addressShortener } from "./utils";
 
 function formatBalance(balance: ethers.BigNumber) {
   return parseFloat(ethers.utils.formatEther(balance)).toFixed(4);
@@ -37,6 +38,11 @@ export const Home: React.FunctionComponent = () => {
 
   return (
     <div className="home-container">
+      <div className="wallet-address">
+        <Typography.Text type="secondary">
+          {addressShortener(wallet.address)}
+        </Typography.Text>
+      </div>
       <div className="balance-wrapper">
         <div className="balance-title">
           <Typography.Text type="secondary">Balance</Typography.Text>
